@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
@@ -27,6 +28,7 @@ func getKubeClient() (*kubernetes.Clientset, error) {
 			return nil, err
 		}
 	}
+	config.Timeout = 120 * time.Second
 	return kubernetes.NewForConfig(config)
 }
 
