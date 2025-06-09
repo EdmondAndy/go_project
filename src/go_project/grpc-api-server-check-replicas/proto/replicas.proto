@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package replicas;
+
+option go_package = "replicaspb";
+
+service ReplicaService {
+  rpc GetReplicaCount(GetReplicaRequest) returns (GetReplicaResponse);
+}
+
+message GetReplicaRequest {
+  string namespace = 1;
+  string name = 2;
+}
+
+message GetReplicaResponse {
+  string name = 1;
+  string namespace = 2;
+  int32 replicas = 3;
+  int32 readyReplicas = 4;
+  int32 availableReplicas = 5;
+  int32 updatedReplicas = 6;
+}
