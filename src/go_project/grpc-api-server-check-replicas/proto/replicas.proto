@@ -2,22 +2,22 @@ syntax = "proto3";
 
 package replicas;
 
-option go_package = "replicaspb";
+option go_package = "go_grpc/proto";
 
 service ReplicaService {
-  rpc GetReplicaCount(GetReplicaRequest) returns (GetReplicaResponse);
+  rpc GetDeploymentReplicas (ReplicaRequest) returns (ReplicaResponse);
 }
 
-message GetReplicaRequest {
+message ReplicaRequest {
   string namespace = 1;
   string name = 2;
 }
 
-message GetReplicaResponse {
+message ReplicaResponse {
   string name = 1;
   string namespace = 2;
   int32 replicas = 3;
-  int32 readyReplicas = 4;
-  int32 availableReplicas = 5;
-  int32 updatedReplicas = 6;
+  int32 ready_replicas = 4;
+  int32 available_replicas = 5;
+  int32 updated_replicas = 6;
 }
