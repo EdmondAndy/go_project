@@ -8,6 +8,7 @@ import (
 	"os"
 )
 
+// Words struct to hold the JSON response
 type Words struct {
 	Page string `json:"page"`
 	Input string `json:"input"`
@@ -46,4 +47,6 @@ func main() {
 	// if error != nil {
 	// 	log.Fatal(err)
 	// }
+
+	// fmt.Printf("JSON Parsed\nPage: %s\nWords: %v\n", words.Page, strings.Join(words.Words, ", "))
 }
