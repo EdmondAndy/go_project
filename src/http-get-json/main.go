@@ -12,6 +12,8 @@ import (
 )
 
 // {"page":"occurrence","words":{"word1":1,"word2":2,"word3":1}}
+// partially parse json response, if page is "words" then parse words, if page is "occurrence" then parse occurrence
+// this will help with the parsing of the json response based on the page type
 
 type Page struct {
 	Name string `json:"page"`
