@@ -9,12 +9,13 @@ type MyJWTTransport struct {
 	token string
 	password string
 	loginURL string
+	HTTPClient ClientIface
 }
 
 func (m *MyJWTTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	if m.token == "" {
 		if m.password != "" {
-			token, err := doLoginRequest(http.Client{}, m.loginURL, m.password)
+			token, err := doLoginRequest(m.HTTPClient, m.loginURL, m.password)
 			if err != nil {
 				return nil, err
 			}
