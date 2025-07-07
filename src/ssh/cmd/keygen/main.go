@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/wardviaene/golang-for-devops-course/ssh-demo"
+	"github.com/EdmondAndy/go_proj/src/ssh"
 )
 
 func main() {
