@@ -6,7 +6,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/EdmondAndy/go_proj/src/ssh"
+	"github.com/EdmondAndy/go_project/src/ssh"
 )
 
 func main() {
