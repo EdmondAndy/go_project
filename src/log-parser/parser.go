@@ -11,6 +11,7 @@ type parser struct {
 	domains []string       // unique domain names
 	total   int            // total visits to all domains
 	lines   int            // number of parsed lines (for the error messages)
+	lerr	error          // last error
 }
 
 type result struct{
@@ -18,51 +19,56 @@ type result struct{
 	visits int
 }
 
-func newParser() parser {
-	return parser{sum: make(map[string]result)}
+func newParser() *parser {
+	return &parser{sum: make(map[string]result)}
 }
 
-func parse(p parser, line string) (result, error) {
-	var (
-		parsed result
-		err    error
-	)
-
+func parse(p *parser, line string) (r result) {
+	if p.lerr != nil {
+		return
+	}
+	p.lines++
 
 	// Parse the fields
 	fields := strings.Fields(line)
 	if len(fields) != 2 {
-		err = fmt.Errorf("wrong input: %v (line #%d)", fields, p.lines)
-		return parsed, err
+		p.lerr = fmt.Errorf("wrong input: %v (line #%d)", fields, p.lines)
+		return r
 	}
 
-	parsed.domain = fields[0]
+	var err error
+
+	r.domain = fields[0]
 
 	// Sum the total visits per domain
-	parsed.visits, err = strconv.Atoi(fields[1])
-	if parsed.visits < 0 || err != nil {
+	r.visits, err = strconv.Atoi(fields[1])
+	if r.visits < 0 || err != nil {
 		err = fmt.Errorf("wrong input: %q (line #%d)", fields[1], p.lines)
-		return parsed, err
+		return r
 	}
 
-	return parsed, nil
+	return r
 }
 
-func update(p parser, parsed result) parser{
-	domain, visits := parsed.domain, parsed.visits
+func update(p *parser, r result) {
+	if p.lerr != nil {
+		return
+	}
 
 	// Collect the unique domains
-	if _, ok := p.sum[domain]; !ok {
-		p.domains = append(p.domains, domain)
+	if _, ok := p.sum[r.domain]; !ok {
+		p.domains = append(p.domains, r.domain)
 	}
 
 	// Keep track of total and per domain visits
-	p.total += visits
+	p.total += r.visits
 
-	p.sum[domain] = result{
-		domain: domain,
-		visits: visits + p.sum[domain].visits,
+	p.sum[r.domain] = result{
+		domain: r.domain,
+		visits: r.visits + p.sum[r.domain].visits,
 	}
+}
 
-	return p
+func err(p *parser) error {
+	return p.lerr
 }
