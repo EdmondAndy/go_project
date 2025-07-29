@@ -17,3 +17,7 @@
 - rune-manipulator
 - spam-masker
 - ssh
+- empty-interface
+- test-interface
+- test-type-assertion
+- pointer-receiver
