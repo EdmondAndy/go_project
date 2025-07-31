@@ -8,15 +8,11 @@ import (
 func main() {
 	mux := defaultMux()
 
-	// Build the MapHandler using the mux as the fallback
 	pathsToUrls := map[string]string{
 		"/urlshort-godoc": "https://godoc.org/github.com/gophercises/urlshort",
 		"/yaml-godoc":     "https://godoc.org/gopkg.in/yaml.v2",
 	}
 	mapHandler := MapHandler(pathsToUrls, mux)
-
-	// Build the YAMLHandler using the mapHandler as the
-	// fallback
 
 	yaml := `
 - path: /urlshort
