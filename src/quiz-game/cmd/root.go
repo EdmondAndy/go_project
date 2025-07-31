@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/spf13/cobra"
 )
@@ -25,7 +26,8 @@ var rootCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		// Implement the main logic for the quiz game here
 		cfgFile, _ := cmd.Flags().GetString("csv")
-		//timeLimit, _ := cmd.Flags().GetInt("limit")
+		timeLimit, _ := cmd.Flags().GetInt("limit")
+
 		file, err := os.Open(cfgFile)
 		if err != nil {
 			cmd.PrintErrf("Error opening file %s: %v\n", cfgFile, err)
@@ -38,17 +40,30 @@ var rootCmd = &cobra.Command{
 			return
 		}
 		problems := parseLines(lines)
+
+		timer := time.NewTimer(time.Duration(timeLimit) * time.Second)
 		
 		correct := 0
 		for i, p := range problems {
 			fmt.Printf("Problem #%d: %s = ?\n", i+1, p.q)
-			var answer string
-			fmt.Scanln(&answer)
-			if strings.TrimSpace(answer) == p.a {
-				fmt.Println("Correct!")
-				correct++
-			} else {
-				fmt.Printf("Wrong! The correct answer is %s\n", p.a)
+			answerCh := make(chan string)
+			go func(){
+				var answer string
+				fmt.Scanf("%s\n", &answer)
+				answerCh <- answer
+			}()
+
+			select {
+			case <-timer.C:
+				fmt.Printf("You got %d out of %d correct!\n", correct, len(problems))
+				return
+			case answer := <-answerCh:
+				if answer == p.a {
+					fmt.Println("Correct!")
+					correct++
+				} else {
+					fmt.Printf("Wrong! The correct answer is %s\n", p.a)
+				}
 			}
 		}
 		fmt.Printf("You got %d out of %d correct!\n", correct, len(problems))
@@ -82,7 +97,7 @@ func init() {
 	// will be global for your application.
 
 	rootCmd.Flags().StringP("csv", "", "problems.csv", "a csv file in the format of 'question,answer' for the quiz game")
-	//rootCmd.PersistentFlags().IntVar(&timeLimit, "limit", 30, "the time limit for each question in seconds")
+	rootCmd.Flags().IntP("limit", "", 30, "the time limit for each question in seconds")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
