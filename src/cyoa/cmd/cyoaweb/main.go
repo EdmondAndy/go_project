@@ -5,6 +5,8 @@ import (
 	"flag"
 	"fmt"
 	"os"
+
+	"github.com/edmondandy/go_project/src/cyoa"
 )
 
 func main() {
