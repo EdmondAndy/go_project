@@ -5,7 +5,7 @@ import (
 	"log"
 	"strings"
 
-	htmllinkparser "github.com/edmondanndy/go_project/src/html-link-parser"
+	htmllinkparser "github.com/edmondandy/go_project/src/html-link-parser"
 )
 
 var exampleHtml = `
