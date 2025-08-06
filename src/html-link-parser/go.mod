@@ -1,4 +1,4 @@
-module github.com/edmondanndy/go_project/src/html-link-parser
+module github.com/edmondandy/go_project/src/html-link-parser
 
 go 1.23.4
 
