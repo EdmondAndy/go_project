@@ -1,0 +1,4 @@
+github.com/edmondandy/go_project/src/html-link-parser v0.0.0-20250806232206-fd4e25199930 h1:/mzctOE360JZt/1ao4kUfMlJK0Yhq3VTWM5Tzf5tFnk=
+github.com/edmondandy/go_project/src/html-link-parser v0.0.0-20250806232206-fd4e25199930/go.mod h1:yDPGIvTVG3YKxQ+LYTB3j8v+A80NWx17fbKnZSe4RxA=
+golang.org/x/net v0.42.0 h1:jzkYrhi3YQWD6MLBJcsklgQsoAcw89EcZbJw8Z614hs=
+golang.org/x/net v0.42.0/go.mod h1:FF1RA5d3u7nAYA4z2TkclSCKh68eSXtiFwcWQpPXdt8=
