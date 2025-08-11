@@ -21,3 +21,11 @@
 - test-interface
 - test-type-assertion
 - pointer-receiver
+- black-jack
+- camel-case
+- cli-task-manager
+- cyoa
+- deck-of-cards
+- phone-number
+- quiz-game
+- url-shortner
